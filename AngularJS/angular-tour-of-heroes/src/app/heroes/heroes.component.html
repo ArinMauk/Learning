@@ -1,0 +1,23 @@
+<!-- *ngFor is a for each loop that repeats the element (and it's children) it's delcared inside of. Obviously interpolation ( the "{{}}" curly brackets) is used. for(int i : numberArray) { return i*2} etc. -->
+<h2>My Heroes</h2>
+<ul class="heroes">
+    <li *ngFor="let hero of heroes">
+        <span class="badge">{{hero.id}}</span> {{hero.name}}
+    </li>
+
+</ul>
+
+<h2>{{hero.name | uppercase}} Details</h2>
+<div>
+    <span> id: </span> {{hero.id}}
+</div>
+
+<div>
+    <span>name: </span> {{hero.name | uppercase}}
+</div>
+
+<div>
+    <label>name:
+        <input [(ngModel)]="hero.name" placeholder="name">
+    </label>
+</div>
