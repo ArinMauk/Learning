@@ -14,7 +14,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 bootJar {
-    baseName = 'gs-rest-service'
+    baseName = 'employeeAPI'
     version =  '0.1.0'
 }
 
@@ -27,5 +27,12 @@ targetCompatibility = 1.8
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile files('libs/ojdbc7.jar')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
+
+// https://springframework.guru/configuring-spring-boot-for-oracle/
+// https://spring.io/guides/gs/accessing-data-mysql/
+
+// No error for jdbc....add it to libs folder and compfile the oracle jdbc from the libs folder in gradle script.
