@@ -11,8 +11,8 @@ class Circle {
 
     public:
 
-        void setRadius(double temp_radius){
-            radius = temp_radius;
+        void setRadius(double newRadius){
+            radius = newRadius;
         }
 
         double getRaidus(){
@@ -22,17 +22,52 @@ class Circle {
         double getArea(){
             return 3.14 * (radius * radius);
         }
-
-
 };
+
+class Rectangle {
+    private:
+        double width;
+        double length;
+    public:
+        void setWidth(double newWidth);
+        void setLength(double newLength);
+        double getWidth();
+        double getLength();
+        double getArea();
+};
+
+void Rectangle::setWidth(double newWidth){
+    width = newWidth;
+}
+
+void Rectangle::setLength(double newLength){
+    length = newLength;
+}
+
+double Rectangle::getWidth(){
+    return width;
+}
+
+double Rectangle::getLength(){
+    return length;
+}
+
+double Rectangle::getArea(){
+    return width * length;
+}
 
 int main()
 {
-
     Circle circle1;
+    Rectangle rectangle1;
 
     circle1.setRadius(5.0);
-    cout << "Area of Circle 1: " << circle1.getArea() << endl;
+
+    rectangle1.setLength(3.00);
+    rectangle1.setWidth(7.000);
+
+    cout << "Area of Circle 1: " << circle1.getArea() << "\n" << "Area of Rectangle 1: " << rectangle1.getArea() << endl;
     cout << "Hello World" << endl;
+
     return 0;
 }
