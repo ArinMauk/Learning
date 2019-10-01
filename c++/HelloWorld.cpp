@@ -1,4 +1,5 @@
 #include <iostream>
+#include "Triangle.h"
 
 using namespace std;
 
@@ -60,13 +61,17 @@ int main()
 {
     Circle circle1;
     Rectangle rectangle1;
+    Triangle triangle1;
 
     circle1.setRadius(5.0);
 
     rectangle1.setLength(3.00);
     rectangle1.setWidth(7.000);
 
-    cout << "Area of Circle 1: " << circle1.getArea() << "\n" << "Area of Rectangle 1: " << rectangle1.getArea() << endl;
+    triangle1.setBase(2.00);
+    triangle1.setHeight(8.00);
+
+    cout << "Area of Circle 1: " << circle1.getArea() << "\n" << "Area of Rectangle 1: " << rectangle1.getArea() << "\n" << "Area of Triangle 1: " << triangle1.getArea() << endl;
     cout << "Hello World" << endl;
 
     return 0;
