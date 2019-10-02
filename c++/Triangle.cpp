@@ -19,3 +19,7 @@ double Triangle::getHeight(){
 double Triangle::getArea(){
     return (0.5) * base * height;
 }
+
+double Triangle::getPerimeter(){
+    return 0.0;
+}

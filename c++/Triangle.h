@@ -1,4 +1,8 @@
-class Triangle{
+#ifndef TRIANGLE_H
+#define TRIANGLE_H
+#include "Shape.h"
+
+class Triangle: public Shape{
     private:
         double base;
         double height;
@@ -7,6 +11,9 @@ class Triangle{
         void setHeight(double newHeight);
         double getBase();
         double getHeight();
-        double getArea();
+        double getArea() override;
+        double getPerimeter() override;
 
 };
+
+#endif
