@@ -1,12 +1,13 @@
 #include <iostream>
 #include "Triangle.h"
+#include "Shape.h"
 
 using namespace std;
 
 // Command line, go to directory of the file.
 // Compiling: g++ <fileName>
 
-class Circle {
+class Circle : public Shape {
     private: 
         double radius;
 
@@ -25,7 +26,7 @@ class Circle {
         }
 };
 
-class Rectangle {
+class Rectangle : public Shape {
     private:
         double width;
         double length;
@@ -34,7 +35,8 @@ class Rectangle {
         void setLength(double newLength);
         double getWidth();
         double getLength();
-        double getArea();
+        double getArea() override;
+        
 };
 
 void Rectangle::setWidth(double newWidth){
@@ -60,6 +62,7 @@ double Rectangle::getArea(){
 int main()
 {
     Circle circle1;
+    Circle * circle2 = &circle1; // circle2 now stores the address of circle1.
     Rectangle rectangle1;
     Triangle triangle1;
 
@@ -72,7 +75,8 @@ int main()
     triangle1.setHeight(8.00);
 
     cout << "Area of Circle 1: " << circle1.getArea() << "\n" << "Area of Rectangle 1: " << rectangle1.getArea() << "\n" << "Area of Triangle 1: " << triangle1.getArea() << endl;
-    cout << "Hello World" << endl;
+    cout << "Area of Circle 2 (using arrow method): " << circle2->getArea() << endl;
+    cout << "Area of Circle 2 (using * [dereference] operator): " << (*circle2).getArea() << endl;
 
     return 0;
 }
