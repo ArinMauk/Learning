@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Balanced Binary Tree</title>
+    <style>
+        .BinaryTreeContainer {
+            border-style: solid;
+            border-radius: 5px;
+            max-width: 800px;
+            margin: auto;
+            overflow: hidden;
+            min-height: 600px;
+        }
+
+        #BinaryTreeOperations {
+            border-style: solid;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        #addNodeButton,
+        #deleteNodeButton,
+        #balanceTreeButton {
+            border-style: solid;
+            border-radius: 15px;
+            border-color: lightgray;
+            color: white;
+            padding: 15px 30px;
+            margin-right: 5px;
+            font-family: Arial, Helvetica, sans-serif;
+            float: left;
+            background-color: rgb(87, 170, 87);
+            text-align: center;
+        }
+
+        #addNodeButton:hover,
+        #deleteNodeButton:hover,
+        #balanceTreeButton:hover {
+            background-color: white;
+            color: black;
+            border-color: rgb(87, 170, 87);
+            cursor: pointer;
+        }
+
+        #addNodeButton {
+            margin-left: 20%;
+        }
+
+        #RandomNodeNumberGenerator{
+            border-style: solid;
+            border-radius: 15px;
+            border-color: lightgray;
+            color: white;
+            padding: 5px 8px;
+            margin-right: 5px;
+            font-family: Arial, Helvetica, sans-serif;
+            float: left;
+            background-color: rgb(87, 170, 87);
+            text-align: center;
+            margin-top: 20px;
+            margin-left: 10px;
+            
+        }
+
+        #RandomNodeNumberGenerator:hover {
+            background-color: white;
+            color: black;
+            border-color: rgb(87, 170, 87);
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!--Balanced Binary Tree-->
+    <div class="BinaryTreeContainer">
+        <!--Node Values-->
+        <div id="addNodeSection" style="margin: auto; overflow: hidden">
+            <div style="text-align: center; float: left; margin-left: 20%; margin-top: 25px">
+                Node Value: <input type="text" id="newNode" name="newNode" placeholder="new Node...">
+            </div>
+            <div id="RandomNodeNumberGenerator" onclick="newRandomNode()">Random Node</div>
+        </div>
+
+        <div id="BinaryTreeOperations">
+            <!--Add Node Button-->
+            <div id="addNodeButton" onclick="addNode()">Add Node</div>
+
+            <!--Delete Node Button-->
+            <div id="deleteNodeButton" onclick="deleteNode()">Delete Node</div>
+
+            <!--Balance Tree Button-->
+            <div id="balanceTreeButton">Balance Tree</div>
+        </div>
+
+        <div id="tree" style="border-style: solid">
+            <!-- <div id="row1" style="border-style:solid; border-radius: 40px; width: 70px; text-align: center; padding: 25px 0px; margin-left: 45%">15</div>
+             -->
+
+        </div>
+
+    </div>
+
+    <script>
+        var numNodes = 0;
+        function addNode() {
+            var div1 = document.createElement("div");
+            var newNodeValue = document.getElementById("newNode").value;
+            div1.innerHTML = newNodeValue;
+            div1.style.borderStyle = "solid";
+            div1.style.borderRadius = "40px";
+            div1.style.width = "70px"; 
+            div1.style.textAlign = "center";
+            div1.style.padding = "25px 0px";
+            div1.style.marginLeft = "45%";
+            div1.id = "node-" + numNodes;
+            document.getElementById("tree").appendChild(div1);
+            numNodes++;
+        }
+        // Create a condition to handle numNodes not going under 0....eg: I could keep hitting deleted node and gettin numNodes Negative.
+        // The functionality still works like intended either way, just....ugly. Might need another solution anyways. This one is 
+        // kind of ugly.
+        function deleteNode() {
+            var myobj = document.getElementById("node-" + (numNodes - 1).toString());
+            myobj.remove();
+            numNodes--;
+        }
+
+        // Returns a random number between 1-50
+        function newRandomNode(){
+            document.getElementById("newNode").value = Math.floor(Math.random() * 50);
+        }
+
+    </script>
+
+
+</body>
+
+</html>
