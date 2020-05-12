@@ -2,11 +2,14 @@
 * This file handles the GUI creation of the nodes, their values, and their connections.
 */
 
+//import BNode from '../BNode.js';
+import { BinarySearchTree, BNode } from './BinarySearchTree.js';
+
 var numNodes = 0;
 function addNode() {
     var div1 = document.createElement("div");
     var newNodeValue = document.getElementById("newNode").value; // change newNode id to newNodeValue
-    var newNode = new Node(); 
+    //var newNode = new BNode(); 
     div1.innerHTML = newNodeValue;
     div1.style.borderStyle = "solid";
     div1.style.borderRadius = "40px";
