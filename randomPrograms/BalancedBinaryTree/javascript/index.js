@@ -1,23 +1,22 @@
 /* 
 * This file handles the GUI creation of the nodes, their values, and their connections.
+* 
+* TODO: 
+*       * Write a method to handle svg node gui overlap. 
+*       * Write a method to delete nodes.
+*       * Handle logic for selecting a node on the homepage and directing to deleteNodes method.
+*       * Write method to rebalance tree.
 */
 
 var numNodes = 0;
 var numDepths = 0;
 
-// TODO: Fix css for adding left and right nodes. The css is just adding nodes from the last added
-// node because the 'logic' for getting the parent is whatever the last node added was. 
-// use the binarySearchTree Object and align the parent with the id of the div tag (ie: parent node 0 -> node-0, etc.)
+
 function addNode() {
-    //var div1 = document.createElement("div");
     var newNodeValue = document.getElementById("newNode").value; // change newNode id to newNodeValue
     var newNode = new BNode(); 
-    //var divCss = {borderStyle: 'solid', borderRadius: '40px', width: '70px', textAlign: 'center', padding: '25px 0px', marginLeft: '45%', marginTop: '-8px', id: 'node-' + numNodes};
-    //var svgStyles = (numNodes == 0 ? {cx: '500', cy: '500', r: 40, strk: 'green', strkWid: '4', fill: 'yellow'} : )
-    //newNode.setNodeDiv(div1); // delete setNodeDiv
-    //newNode.setNodeCss(divCss); // delete setNodeCss
-    newNode.setNodeValue(Number(newNodeValue));
 
+    newNode.setNodeValue(Number(newNodeValue));
     BinarySearchTree.insertNode(newNode);
 
     if(numNodes > 0){
@@ -30,22 +29,15 @@ function addNode() {
         generateNodeSVG(newNode);
     }
 
-    // if(depths == null || depths.length < 1){
-    //     var newDepth = document.createElement("div");
-    //     newDepth.id = 0;
-    // } 
-
     numNodes++;
 }
 
-// Handles the placement of a new node with arrow.
+// Grab parent nodes svg styles and alter them to current nodes svg style to make a leftChildNode.
 function leftChildNode(newNode) {
-    // Find parent node.
     var parentNode = BinarySearchTree.getBinaryTree()[newNode.getParentNodeIndex()];
     var parentNodeSVGStyle = parentNode.getNodeSVGStyle();
 
     if (parentNode != null) {
-        // Add appropriate svg spacings for a right child from parent.
         newNode.setNodeSVGStyle({
             Crl:{
                 cx: (parentNodeSVGStyle.Crl.cx - 100), 
@@ -77,14 +69,13 @@ function leftChildNode(newNode) {
 
 
 }
-
+ 
+// Grab parent nodes svg styles and alter them to current nodes svg style to make a rightChildNode.
 function rightChildNode(newNode) {
-    // Find parent node.
     var parentNode = BinarySearchTree.getBinaryTree()[newNode.getParentNodeIndex()];
     var parentNodeSVGStyle = parentNode.getNodeSVGStyle();
 
     if (parentNode != null) {
-        // Add appropriate svg spacings for a right child from parent.
         newNode.setNodeSVGStyle({
             Crl:{
                 cx: (parentNodeSVGStyle.Crl.cx + 100), 
@@ -116,7 +107,9 @@ function rightChildNode(newNode) {
 
 
 }
-
+// 3 Objects: Circle, Text, and line (derived from parent).
+// 'generateNodeSVG' reads svgStyle JSON from the passed in node and adds the svg elements to the homepage. 
+// The logic for the svg styles is handled in rightChildNode and leftChildNode methods.
 function generateNodeSVG(newNode){
     var nodeCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
     var nodeText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
@@ -160,54 +153,7 @@ function generateNodeSVG(newNode){
     
 }
 
-// function createArrow(parentNode, isRightArrow) {
-
-//     var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-//     svg.id = "svg-" + numNodes;
-
-//     if (isRightArrow == true) {
-//         svg.style.marginLeft = (parseFloat(parentNode.getNodeCss().marginLeft) + 5) + "%";
-//     } else {
-//         svg.style.marginLeft = (parseFloat(parentNode.getNodeCss().marginLeft) - 5) + "%";
-//     }
-
-//     svg.setAttribute("height", 50);
-//     svg.setAttribute("width", 80);
-//     document.getElementById("tree").appendChild(svg);
-
-//     var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-//     line.id = "line-" + numNodes;
-
-//     if (isRightArrow == true) {
-//         line.setAttribute('x1', 0);
-//         line.setAttribute('y1', 0);
-//         line.setAttribute('x2', 120);
-//         line.setAttribute('y2', 80);
-//     } else {
-//         line.setAttribute('x1', 80);
-//         line.setAttribute('y1', 0);
-//         line.setAttribute('x2', 0);
-//         line.setAttribute('y2', 50);
-//     }
-
-//     line.style.stroke = "rgb(0,0,0)";
-//     line.style.strokeWidth = "2";
-
-//     document.getElementById("svg-" + numNodes).appendChild(line);
-{/* <svg width="300" height="300">
-   <circle cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow" />
-   <text x="40" y="55">15 </text>
-   <line x1="80" y1="80" x2="150" y2="150" style="stroke:rgb(0,0,0);stroke-width:2" />
-   <circle cx="150" cy="150" r="40" stroke="green" stroke-width="4" fill="yellow" />
-   <text x="140" y="155">25</text>
-   <line x1="180" y1="180" x2="250" y2="250" style="stroke:rgb(0,0,0);stroke-width:2" />
-   <line x1="120" y1="180" x2="0" y2="250" style="stroke:rgb(0,0,0);stroke-width:2" />
-</svg>  */}
-// }
-
-// Create a condition to handle numNodes not going under 0....eg: I could keep hitting deleted node and gettin numNodes Negative.
-// The functionality still works like intended either way, just....ugly. Might need another solution anyways. This one is 
-// kind of ugly.
+// TODO: Have delete Node button on index.html page call this method. Do a hover over, select node. Delete the circle, line, and text objects in the node. Rebalance the tree.
 function deleteNode() {
     if (numNodes > 0) {
         var guiDiv = document.getElementById("node-" + (numNodes - 1).toString());
@@ -227,7 +173,7 @@ function newRandomNode() {
     document.getElementById("newNode").value = Math.floor(Math.random() * 50);
 }
 
-// this way of creating objects is more like concrete objects.
+// Node Class that has variables to know its parent, children, and it's style ( ͡° ͜ʖ ͡°) 
 function BNode() {
 
     this.parentNodeIndex = null;
@@ -236,7 +182,6 @@ function BNode() {
     this.rightChildNodeIndex = null;
     this.nodeValue = null;
     this.nodeSVGStyle = null;
-    //this.nodeDiv = null;
     this.nodeDepth = null;
     this.nodeCircle = null;
     this.nodeText = null;
@@ -272,14 +217,6 @@ function BNode() {
     this.setNodeLine = function(nodeLine){
         this.nodeLine = nodeLine;
     }
-
-    // this.getNodeDiv = function() {
-    //     return this.nodeDiv;
-    // }
-
-    // this.setNodeDiv = function(nodeDiv) {
-    //     this.nodeDiv = nodeDiv;
-    // }
 
     this.getNodeSVGStyle = function () {
         return this.nodeSVGStyle;
@@ -339,7 +276,7 @@ function BNode() {
 
 }
 
-// This way of creating objects is more like a static object. 
+// Binary Tree Object that holds the data (nodes) and logic for a binary tree.
 var BinarySearchTree = {
 
     tree: [], // tree contains array of nodes.
@@ -411,10 +348,6 @@ var BinarySearchTree = {
         }
 
     },
-
-    // Uses binarySearchTree in combination with a new node and 
-    // tranverses the tree, comparing left and right children as it goes.
-
 
     // Traverses binarySearchTree looking for the node that matches the parameter.
     deleteNode: function (nodeToDelete) { },
