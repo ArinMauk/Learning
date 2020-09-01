@@ -11,7 +11,6 @@
 var numNodes = 0;
 var numDepths = 0;
 
-
 function addNode() {
     var newNodeValue = document.getElementById("newNode").value; // change newNode id to newNodeValue
     var newNode = new BNode(); 
@@ -30,6 +29,14 @@ function addNode() {
     }
 
     numNodes++;
+}
+
+function startOver(){
+    var tree = document.getElementById("svg-tree");
+    tree.innerHTML = "";
+    BinarySearchTree.setBinaryTree([]);
+    numNodes = 0;
+    numDepths = 0;
 }
 
 // Grab parent nodes svg styles and alter them to current nodes svg style to make a leftChildNode.
@@ -201,6 +208,15 @@ function BNode() {
 
     this.setNodeCircle = function(nodeCircle){
         this.nodeCircle = nodeCircle;
+        this.nodeCircle.onclick = function() {
+            var circle = document.getElementById(nodeCircle.id);
+            if(circle.getAttribute("fill") == "white"){
+                circle.setAttribute("fill","rgb(0, 195, 230)");
+            }else{
+                circle.setAttribute("fill","white");
+            }
+            
+        };
     }
 
     this.getNodeText = function(){
@@ -320,7 +336,7 @@ var BinarySearchTree = {
                 this.parentNodeIndex = 0;
                 insertedNewNode = true;
             } else {
-                console.log("tree{currTreeNodeIndex]: " + this.tree[currTreeNodeIndex].getNodeValue() + ", newNode.getNodeValue(): " + newNode.getNodeValue())
+                console.log("tree[currTreeNodeIndex]: " + this.tree[currTreeNodeIndex].getNodeValue() + ", newNode.getNodeValue(): " + newNode.getNodeValue())
                 if (this.tree[currTreeNodeIndex].getNodeValue() > newNode.getNodeValue()) {
                     if (this.tree[currTreeNodeIndex].hasLeftChild() == true) {
                         currTreeNodeIndex = this.tree[currTreeNodeIndex].getLeftChildIndex();
@@ -360,6 +376,7 @@ var BinarySearchTree = {
 
     setBinaryTree: function (newTree) {
         this.tree = newTree;
+        parentNodeIndex = null;
         // this.parentNodeIndex = newTree.getParentNodeIndex();
     }
 }
